@@ -17,6 +17,7 @@ bool approximatelyEqual(float a, float b)
 int main()
 {
     // 1. Default constructor
+
     Mat3 zero;
 
     for (int row = 0; row < 3; ++row)
@@ -27,7 +28,9 @@ int main()
         }
     }
 
+
     // 2. Identity matrix
+
     Mat3 identity = Mat3::identity();
 
     for (int row = 0; row < 3; ++row)
@@ -40,7 +43,9 @@ int main()
         }
     }
 
+
     // 3. Matrix addition
+
     Mat3 A;
     Mat3 B;
 
@@ -80,21 +85,27 @@ int main()
         }
     }
 
+
     // 4. Matrix subtraction
+
     Mat3 subtraction = A - B;
 
     assert(approximatelyEqual(subtraction.at(0, 0), -8.0f));
     assert(approximatelyEqual(subtraction.at(1, 1), 0.0f));
     assert(approximatelyEqual(subtraction.at(2, 2), 8.0f));
 
+
     // 5. Scalar multiplication
+
     Mat3 scaled = A * 2.0f;
 
     assert(approximatelyEqual(scaled.at(0, 0), 2.0f));
     assert(approximatelyEqual(scaled.at(1, 1), 10.0f));
     assert(approximatelyEqual(scaled.at(2, 2), 18.0f));
 
+
     // 6. Matrix multiplication
+
     Mat3 product = A * B;
 
     assert(approximatelyEqual(product.at(0, 0), 30.0f));
@@ -109,22 +120,26 @@ int main()
     assert(approximatelyEqual(product.at(2, 1), 114.0f));
     assert(approximatelyEqual(product.at(2, 2), 90.0f));
 
-    // 7. Matrix-vector multiplication
-    Mat3 scaling = Mat3::identity();
 
-    scaling.at(0, 0) = 2.0f;
-    scaling.at(1, 1) = 3.0f;
-    scaling.at(2, 2) = 4.0f;
+    // 7. Matrix-vector multiplication
+
+    Mat3 vectorScaling = Mat3::identity();
+
+    vectorScaling.at(0, 0) = 2.0f;
+    vectorScaling.at(1, 1) = 3.0f;
+    vectorScaling.at(2, 2) = 4.0f;
 
     Vec3 vector(1.0f, 2.0f, 3.0f);
 
-    Vec3 transformed = scaling * vector;
+    Vec3 transformed = vectorScaling * vector;
 
     assert(approximatelyEqual(transformed.x, 2.0f));
     assert(approximatelyEqual(transformed.y, 6.0f));
     assert(approximatelyEqual(transformed.z, 12.0f));
 
+
     // 8. Invalid indexing
+
     bool exceptionThrown = false;
 
     try
@@ -138,7 +153,9 @@ int main()
 
     assert(exceptionThrown);
 
+
     // 9. Identity matrix multiplication
+
     Mat3 unchanged = identity * A;
 
     for (int row = 0; row < 3; ++row)
@@ -151,10 +168,9 @@ int main()
             ));
         }
     }
-    
-    // 10. Transpose
-    
-    // 10. Transpose
+
+
+    // 10. Matrix transpose
 
     Mat3 original;
 
@@ -170,24 +186,26 @@ int main()
     original.at(2, 1) = 8.0f;
     original.at(2, 2) = 9.0f;
 
-    Mat3 result = original.transposed();
+    Mat3 transposed = original.transposed();
 
-    assert(approximatelyEqual(result.at(0, 0), 1.0f));
-    assert(approximatelyEqual(result.at(0, 1), 4.0f));
-    assert(approximatelyEqual(result.at(0, 2), 7.0f));
+    assert(approximatelyEqual(transposed.at(0, 0), 1.0f));
+    assert(approximatelyEqual(transposed.at(0, 1), 4.0f));
+    assert(approximatelyEqual(transposed.at(0, 2), 7.0f));
 
-    assert(approximatelyEqual(result.at(1, 0), 2.0f));
-    assert(approximatelyEqual(result.at(1, 1), 5.0f));
-    assert(approximatelyEqual(result.at(1, 2), 8.0f));
+    assert(approximatelyEqual(transposed.at(1, 0), 2.0f));
+    assert(approximatelyEqual(transposed.at(1, 1), 5.0f));
+    assert(approximatelyEqual(transposed.at(1, 2), 8.0f));
 
-    assert(approximatelyEqual(result.at(2, 0), 3.0f));
-    assert(approximatelyEqual(result.at(2, 1), 6.0f));
-    assert(approximatelyEqual(result.at(2, 2), 9.0f));
+    assert(approximatelyEqual(transposed.at(2, 0), 3.0f));
+    assert(approximatelyEqual(transposed.at(2, 1), 6.0f));
+    assert(approximatelyEqual(transposed.at(2, 2), 9.0f));
 
     // Verify that the original matrix remains unchanged.
+
     assert(approximatelyEqual(original.at(0, 1), 2.0f));
     assert(approximatelyEqual(original.at(1, 0), 4.0f));
-    
+
+
     // 11. Matrix determinant
 
     Mat3 determinantMatrix;
@@ -207,8 +225,8 @@ int main()
     float determinant = determinantMatrix.determinant();
 
     assert(approximatelyEqual(determinant, 22.0f));
-    
-    
+
+
     // 12. Zero determinant
 
     Mat3 singularMatrix;
@@ -225,8 +243,16 @@ int main()
     singularMatrix.at(2, 1) = 0.0f;
     singularMatrix.at(2, 2) = 1.0f;
 
-    assert(approximatelyEqual(singularMatrix.determinant(), 0.0f));
-    
+    assert(approximatelyEqual(
+        singularMatrix.determinant(), 0.0f
+    ));
+
+
+    // 13. Identity matrix determinant
+
+    assert(approximatelyEqual(identity.determinant(), 1.0f));
+
+
     // 14. Matrix inverse
 
     Mat3 inverseMatrix;
@@ -246,6 +272,7 @@ int main()
     Mat3 inverse = inverseMatrix.inversed();
 
     // Verify A * A^-1 = I.
+
     Mat3 verification = inverseMatrix * inverse;
 
     for (int row = 0; row < 3; ++row)
@@ -260,7 +287,8 @@ int main()
             ));
         }
     }
-    
+
+
     // 15. Singular matrix inverse
 
     Mat3 singular;
@@ -277,13 +305,13 @@ int main()
     singular.at(2, 1) = 0.0f;
     singular.at(2, 2) = 1.0f;
 
-    // 15. Singular matrix inverse
+    // Reuse exceptionThrown from test 8.
 
     exceptionThrown = false;
 
     try
     {
-        Mat3 invalidInverse = singular.inversed();
+        static_cast<void>(singular.inversed());
     }
     catch (const std::domain_error&)
     {
@@ -291,8 +319,9 @@ int main()
     }
 
     assert(exceptionThrown);
-    
-    // 16. Test: Scaling transformation
+
+
+    // 16. Scaling transformation
 
     Mat3 scalingMatrix = Mat3::scaling(2.0f, 3.0f, 2.0f);
 
@@ -303,9 +332,45 @@ int main()
     assert(approximatelyEqual(scaledVector.x, 4.0f));
     assert(approximatelyEqual(scaledVector.y, 9.0f));
     assert(approximatelyEqual(scaledVector.z, 8.0f));
-    
-    
-    //Main print
+
+
+    // 17. Rotation around Z-axis by 90 degrees
+
+    constexpr float halfPi = 1.57079632679f;
+
+    Mat3 rotationZ = Mat3::rotationZ(halfPi);
+
+    Vec3 rotationVector(1.0f, 0.0f, 0.0f);
+
+    Vec3 rotatedZ = rotationZ * rotationVector;
+
+    assert(approximatelyEqual(rotatedZ.x, 0.0f));
+    assert(approximatelyEqual(rotatedZ.y, 1.0f));
+    assert(approximatelyEqual(rotatedZ.z, 0.0f));
+
+
+    // 18. Rotation around X-axis by 90 degrees
+
+    Mat3 rotationX = Mat3::rotationX(halfPi);
+
+    Vec3 rotatedX = rotationX * Vec3(0.0f, 1.0f, 0.0f);
+
+    assert(approximatelyEqual(rotatedX.x, 0.0f));
+    assert(approximatelyEqual(rotatedX.y, 0.0f));
+    assert(approximatelyEqual(rotatedX.z, 1.0f));
+
+
+    // 19. Rotation around Y-axis by 90 degrees
+
+    Mat3 rotationY = Mat3::rotationY(halfPi);
+
+    Vec3 rotatedY = rotationY * Vec3(0.0f, 0.0f, 1.0f);
+
+    assert(approximatelyEqual(rotatedY.x, 1.0f));
+    assert(approximatelyEqual(rotatedY.y, 0.0f));
+    assert(approximatelyEqual(rotatedY.z, 0.0f));
+
+
     std::cout << "All Mat3 tests passed!\n";
 
     return 0;

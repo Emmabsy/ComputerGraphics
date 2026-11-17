@@ -206,7 +206,7 @@ namespace Engine::Math
         return result;
     }
     
-    //Tranformation
+    //Scaling - Tranformation
     
     Mat3 Mat3::scaling(float sx, float sy, float sz)
     {
@@ -219,4 +219,63 @@ namespace Engine::Math
         return result;
     }
     
+    //Rotation Around the Z azis
+    
+    Mat3 Mat3::rotationZ(float radians)
+    {
+        Mat3 result;
+
+        const float cosine = std::cos(radians);
+        const float sine = std::sin(radians);
+
+        result.m[0][0] = cosine;
+        result.m[0][1] = -sine;
+
+        result.m[1][0] = sine;
+        result.m[1][1] = cosine;
+
+        result.m[2][2] = 1.0f;
+
+        return result;
+    }
+    
+    //Rotation around the X axis
+    
+    Mat3 Mat3::rotationX(float radians)
+    {
+        Mat3 result;
+
+        const float cosine = std::cos(radians);
+        const float sine = std::sin(radians);
+
+        result.m[0][0] = 1.0f;
+
+        result.m[1][1] = cosine;
+        result.m[1][2] = -sine;
+
+        result.m[2][1] = sine;
+        result.m[2][2] = cosine;
+
+        return result;
+    }
+    
+    //Rotation around the Y axis
+    
+    Mat3 Mat3::rotationY(float radians)
+    {
+        Mat3 result;
+
+        const float cosine = std::cos(radians);
+        const float sine = std::sin(radians);
+
+        result.m[0][0] = cosine;
+        result.m[0][2] = sine;
+
+        result.m[1][1] = 1.0f;
+
+        result.m[2][0] = -sine;
+        result.m[2][2] = cosine;
+
+        return result;
+    }
 }

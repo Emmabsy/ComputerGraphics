@@ -28,10 +28,15 @@ namespace Engine::Math
 		float determinant() const;
 		Mat3 inversed() const;
 
-		//
+		//Scaling
 		static Mat3 scaling(float sx, float sy, float sz);
 
+		//Rotation
 
+		static Mat3 rotationZ(float radians); //Rotation around z axis
+
+		static Mat3 rotationX(float radians); //Rotation around X axis
+		static Mat3 rotationY(float radians); //Rotation around Y axis
 
 
         // Multiplication
