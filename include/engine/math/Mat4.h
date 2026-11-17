@@ -1,7 +1,6 @@
-﻿
-#pragma once
-
+﻿#pragma once
 #include "engine/math/Vec3.h"
+#include "engine/math/Vec4.h"
 
 namespace Engine::Math
 {
@@ -28,6 +27,10 @@ namespace Engine::Math
 
         // Matrix multiplication.
         Mat4 operator*(const Mat4& other) const;
+        
+
+        // Matrix-vector multiplication.
+        Vec4 operator*(const Vec4& vector) const;
 
         // Matrix operations.
         Mat4 transposed() const;

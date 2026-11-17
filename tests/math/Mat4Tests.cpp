@@ -1,13 +1,13 @@
-﻿
-#include "engine/math/Mat4.h"
+﻿#include "engine/math/Mat4.h"
+#include "engine/math/Vec4.h"
 
 #include <cassert>
 #include <cmath>
 #include <iostream>
-#include <stdexcept>
 
 using Engine::Math::Mat4;
 using Engine::Math::Vec3;
+using Engine::Math::Vec4;
 
 bool approximatelyEqual(float a, float b)
 {
@@ -384,6 +384,72 @@ int main()
 
         assert(exceptionThrown);
     }
+    
+    //Test 25
+    
+    {
+        Mat4 matrix;
+
+        float values[4][4] = {
+            { 1,  2,  3,  4 },
+            { 5,  6,  7,  8 },
+            { 9, 10, 11, 12 },
+            {13, 14, 15, 16}
+        };
+
+        for (int row = 0; row < 4; ++row)
+        {
+            for (int column = 0; column < 4; ++column)
+            {
+                matrix.m[row][column] = values[row][column];
+            }
+        }
+
+        Vec4 vector(1, 2, 3, 4);
+
+        Vec4 result = matrix * vector;
+
+        assert(approximatelyEqual(result.x, 30.0f));
+        assert(approximatelyEqual(result.y, 70.0f));
+        assert(approximatelyEqual(result.z, 110.0f));
+        assert(approximatelyEqual(result.w, 150.0f));
+    }
+    
+    // Test 27
+    {
+        Mat4 translation = Mat4::translation(10, 20, 30);
+
+        Vec4 position(1, 2, 3, 1);
+
+        Vec4 result = translation * position;
+
+        assert(approximatelyEqual(result.x, 11.0f));
+        assert(approximatelyEqual(result.y, 22.0f));
+        assert(approximatelyEqual(result.z, 33.0f));
+        assert(approximatelyEqual(result.w, 1.0f));
+    }
+    
+    //Test 28
+    
+    {
+        Mat4 translation = Mat4::translation(10, 20, 30);
+
+        Vec4 direction(1, 2, 3, 0);
+
+        Vec4 result = translation * direction;
+
+        assert(approximatelyEqual(result.x, 1.0f));
+        assert(approximatelyEqual(result.y, 2.0f));
+        assert(approximatelyEqual(result.z, 3.0f));
+        assert(approximatelyEqual(result.w, 0.0f));
+    }
+    
+    
+    
+    
+    
+    
+    
     std::cout << "All Mat4 tests passed!\n";
 
     return 0;

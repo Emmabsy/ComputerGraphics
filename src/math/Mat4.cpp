@@ -5,6 +5,7 @@
 #include <stdexcept>
 #include <algorithm>
 
+
 namespace Engine::Math
 {
     namespace
@@ -154,7 +155,31 @@ namespace Engine::Math
 
         return result;
     }
+//Mat4 * Vec4
+    Vec4 Mat4::operator*(const Vec4& vector) const
+    {
+        return Vec4(
+            m[0][0] * vector.x +
+            m[0][1] * vector.y +
+            m[0][2] * vector.z +
+            m[0][3] * vector.w,
 
+            m[1][0] * vector.x +
+            m[1][1] * vector.y +
+            m[1][2] * vector.z +
+            m[1][3] * vector.w,
+
+            m[2][0] * vector.x +
+            m[2][1] * vector.y +
+            m[2][2] * vector.z +
+            m[2][3] * vector.w,
+
+            m[3][0] * vector.x +
+            m[3][1] * vector.y +
+            m[3][2] * vector.z +
+            m[3][3] * vector.w
+        );
+    }
     // ---------------------------------------------------------
     // TRANSPOSE
     // ---------------------------------------------------------
