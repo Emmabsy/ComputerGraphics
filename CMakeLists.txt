@@ -28,7 +28,11 @@ add_library(GraphicsMath
 
         # Colour
         src/math/Colour.cpp
+        #
         src/math/ShadingFrame.cpp
+        src/math/Quaternion.cpp
+        #
+        src/math/SphericalCoordinates.cpp
 )
 
 target_include_directories(GraphicsMath
@@ -135,16 +139,19 @@ add_test(
 
 add_executable(ColourTests
         tests/math/ColourTests.cpp
+        
 )
 
-target_link_libraries(ColourTests
-        PRIVATE GraphicsMath
-)
+target_link_libraries(ColourTests PRIVATE GraphicsMath)
 
-add_test(
-        NAME ColourTests
-        COMMAND ColourTests
-)
+add_test(NAME ColourTests COMMAND ColourTests)
+target_link_libraries(ColourTests PRIVATE GraphicsMath)
+
+
+
+# ==========================================
+# Shading Frame tests
+# ==========================================
 
 add_executable(ShadingFrameTests
         tests/math/ShadingFrameTests.cpp
@@ -153,3 +160,30 @@ add_executable(ShadingFrameTests
 target_link_libraries(ShadingFrameTests PRIVATE GraphicsMath)
 
 add_test(NAME ShadingFrameTests COMMAND ShadingFrameTests)
+
+# ==========================================
+# Quaternion tests
+# ==========================================
+
+add_executable(QuaternionTests
+tests/math/QuaternionTests.cpp
+)
+
+target_link_libraries(QuaternionTests PRIVATE GraphicsMath)
+
+add_test(NAME QuaternionTests COMMAND QuaternionTests)
+
+# ==========================================
+# Spherical tests
+# ==========================================
+
+add_executable(SphericalCoordinatesTests
+        tests/math/SphericalCoordinatesTests.cpp
+)
+
+target_link_libraries(SphericalCoordinatesTests PRIVATE GraphicsMath)
+
+add_test(
+        NAME SphericalCoordinatesTests
+        COMMAND SphericalCoordinatesTests
+)
