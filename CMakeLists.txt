@@ -28,6 +28,7 @@ add_library(GraphicsMath
 
         # Colour
         src/math/Colour.cpp
+        src/math/ShadingFrame.cpp
 )
 
 target_include_directories(GraphicsMath
@@ -144,3 +145,11 @@ add_test(
         NAME ColourTests
         COMMAND ColourTests
 )
+
+add_executable(ShadingFrameTests
+        tests/math/ShadingFrameTests.cpp
+)
+
+target_link_libraries(ShadingFrameTests PRIVATE GraphicsMath)
+
+add_test(NAME ShadingFrameTests COMMAND ShadingFrameTests)
